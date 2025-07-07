@@ -80,6 +80,7 @@ class Solution:
         self.first = -1
         self.last = -1
 
+        # ? Short-circuit when all elements are greater or lesser than target
         if target < arr[0] or target > arr[-1]:
             return 0
 
@@ -90,3 +91,28 @@ class Solution:
         self.find_target(arr, target, 0, len(arr) - 1)
 
         return (self.last - self.first + 1) if self.first != -1 else 0
+
+
+"""
+# ! SIMPLE SOLUTION USING PYTHON BISECT MODULE
+
+# Python program to count occurrence of a given target
+# using binary search
+
+from bisect import bisect_left, bisect_right
+
+# Function to find the occurrence of the given target 
+# using binary search
+def countFreq(arr, target):
+    l = bisect_left(arr, target)
+    r = bisect_right(arr, target)
+    
+    # Return the difference between upper bound and 
+    # lower bound of the target
+    return r - l
+
+if __name__ == "__main__":
+    arr = [1, 2, 2, 2, 2, 3, 4, 7, 8, 8]
+    target = 2
+    print(countFreq(arr, target))
+"""
