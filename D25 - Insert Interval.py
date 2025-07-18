@@ -23,63 +23,73 @@ Constraints:
 class Solution:
     def insertInterval(self, intervals, newInterval):
         """
-        Inserts a new interval into a list of non-overlapping intervals
-        sorted by start time, and merges if necessary.
+        Inserts a new interval into a sorted list of non-overlapping intervals,
+        merging if necessary. All operations are performed in-place to maintain
+        O(1) auxiliary space.
+
+        Args:
+            intervals (List[List[int]]): List of non-overlapping intervals sorted by start time.
+            newInterval (List[int]): The new interval to insert [start, end].
+
+        Returns:
+            List[List[int]]: Updated list of merged, sorted intervals.
 
         Time Complexity: O(n) — single pass
-        Space Complexity: O(1) — no extra list used beyond the result construction
+        Space Complexity: O(1) — no extra space used
         """
-
         n = len(intervals)
         new_start, new_end = newInterval
-        swap_idx = None  # First index at which merging should happen
 
-        # ! Special case: only one interval exists
+        # Get the overall range of intervals
+        first_start = intervals[0][0]
+        last_end = intervals[-1][1]
+
+        # ! Case 1: New interval is entirely before all existing intervals
+        if new_end < first_start:
+            intervals.insert(0, [new_start, new_end])
+            return intervals
+
+        # ! Case 2: New interval is entirely after all existing intervals
+        if new_start > last_end:
+            intervals.append([new_start, new_end])
+            return intervals
+
+        # ! Case 3: Only one interval exists — merge directly
         if n == 1:
             start, end = intervals[0]
+            intervals[0][0] = min(start, new_start)
+            intervals[0][1] = max(end, new_end)
+            return intervals
 
-            if new_end < start:
-                return [[new_start, new_end]] + intervals
-
-            elif new_start > end:
-                return intervals + [[new_start, new_end]]
-
-            else:
-                # Overlap with the only interval — merge both
-                new_start = min(start, new_start)
-                new_end = max(end, new_end)
-                return [[new_start, new_end]]
-
-        # * General case: iterate over all intervals
+        # * Begin checking overlaps
+        swap_idx = None
         for i in range(n):
             cur_start, cur_end = intervals[i]
 
+            # No overlap — current interval ends before new starts
             if cur_end < new_start:
-                # Current interval ends before new one starts — no overlap
                 continue
 
+            # No overlap — current interval starts after new ends
             if cur_start > new_end:
-                # Current interval starts after new one ends — no overlap
                 if swap_idx is None:
                     swap_idx = i
                 break
 
-            # Overlapping interval detected
+            # Overlap found — mark merge start point
             if swap_idx is None:
                 swap_idx = i
 
-            # NOTE: Expand the new interval to absorb overlaps
+            # Expand the new interval to absorb overlapping ranges
             new_start = min(cur_start, new_start)
             new_end = max(cur_end, new_end)
 
-        # * Insertion logic based on overlap boundaries
-        if swap_idx is None and i == 0:
-            # Insert new interval before everything — it's the earliest
-            return [[new_start, new_end]] + intervals[i:]
-
+        # * Case 4: Merge all remaining intervals till the end
         if new_end >= intervals[i][1]:
-            # New interval reaches beyond all others — insert and discard rest
-            return intervals[:swap_idx] + [[new_start, new_end]]
+            del intervals[swap_idx:]
+            intervals.append([new_start, new_end])
+            return intervals
 
-        # Merge from swap_idx up to i-1 and insert remaining unmerged intervals
-        return intervals[:swap_idx] + [[new_start, new_end]] + intervals[i:]
+        # * Case 5: Replace overlapping range with merged interval
+        intervals[swap_idx:i] = [[new_start, new_end]]
+        return intervals
