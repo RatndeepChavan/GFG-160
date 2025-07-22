@@ -132,32 +132,3 @@ def spirallyTraverse(mat):
 
     return res
 """
-
-
-"""
-
-✅ LinkedIn Post:
-🚀 Spiral Matrix — But with a Twist!
-
-Today I explored a fascinating variation of the classic spiral traversal problem — instead of the usual top-left to outer spiral, I designed a solution that starts from the center of the matrix and expands outwards like a blooming flower 🌸.
-
-📌 What's unique?
-
-Traverses from center to edge, not edge to center
-
-Dynamically tracks added rows & columns instead of fixed boundaries
-
-Handles even & odd-sized matrices
-
-Uses alternating row/column control for clean outward growth
-
-✅ All test cases passed on GeeksforGeeks 💚
-🧠 This approach may not be standard, but it was a great exercise in thinking beyond traditional patterns.
-
-🔍 Check out the clean, well-documented solution on my GitHub:
-[Insert GitHub Link]
-
-If you've seen or built similar creative patterns in matrix problems — would love to discuss!
-
-#Python #DSA #CodingChallenge #SpiralMatrix #GeeksForGeeks #CleanCode #DevJourney #ProblemSolving
-"""
