@@ -85,115 +85,31 @@ def countDistinct(arr, k):
     n = len(arr)  
     res = []
     freq = defaultdict(int)
-  
+
     # Store the frequency of elements of the first window
     for i in range(k):
         freq[arr[i]] += 1
-  
+
     # Store the count of distinct elements of the first window
     res.append(len(freq))
-  
+
     for i in range(k, n):
         freq[arr[i]] += 1
         freq[arr[i - k]] -= 1
-      
+    
         # If the frequency of arr[i - k] becomes 0, remove it from the hash map
         if freq[arr[i - k]] == 0:
             del freq[arr[i - k]]
-      
+    
         res.append(len(freq))
-      
+    
     return res
 
 
 if __name__=='__main__':
-  	arr = [1, 2, 1, 3, 4, 2, 3]
+    arr = [1, 2, 1, 3, 4, 2, 3]
     k = 4
 
     res = countDistinct(arr, k)
     print(*res)
-"""
-
-"""
-🚀 Count Distinct Elements — With Zero Extra Space!
-
-Hello Everyone 👋
-
-Recently while solving the Count Distinct Elements in Every Window problem, I noticed that most standard solutions solve it in:
-
-⏱️ O(n) Time
-💾 O(n) Space (due to the result array)
-
-💡 But I wondered — can we go one step further?
-
-After experimenting, I managed to solve it with:
-✅ O(n) Time
-✅ O(1) Extra Space (excluding the frequency map)
-
-How? By writing results directly into the input array itself!
-
-📌 Outcome
-→ Passed all test cases on GeeksforGeeks 💚
-→ Reduced space usage noticeably by removing the result array 
-→ Sharpened my algorithmic thinking and gave me new insight
-
-✨ This felt like a space optimization win especially for large inputs and small windows! ✨
-
-⚠️ Quick Caution...
-This approach mutates the input array, so it's only valid when in-place updates are allowed.
-
-❓ But Is It Really Optimized?
-That's what I thought — until I dug deeper and noticed some trade-offs:
-
-📌 When k ≪ n (e.g., k=3, n=1000):
-✅ The frequency map remains small
-✅ Array mutations are minimal
-✅ Runs efficiently in O(n) time — fast and lean.
-
-📌 But when k ≈ n:
-⚠️ The frequency map grows to nearly size n
-⚠️ Very few windows get created — requiring nearly n iterations just for cleanup
-🔁 That's one loop to build and another to delete, leading to:
-
-❗ Worst-case O(n²) time due to repeated operations
-
-💭 Moral of the Story
-Sometimes a solution looks optimized at first glance.
-But when you step back, factor in edge cases, and consider the cost of each operation in context — including real-world constraints like data size and mutability — you often uncover a more nuanced truth.
-
-🎯 Optimization isn't just about clever tricks — it's about understanding your algorithm across all scenarios.
-
-⚒️ I'm still early in my DSA journey, so I'd love your input — if you spot a hidden flaw or know an even better approach, I'm all ears! 🙌
-
-📸 Pardon the messy screenshot from the original submission 😅
-For clean, well-documented version:
-👉 Check it out here on GitHub: https://lnkd.in/dzCuvrbM
-
-#DSA #Python #OutOfTheBoxThinking #ProblemSolving #Optimization #CodingChallenge #CleanCode #CodingJourney #DevJourney #CodeNewbie #SlidingWindow #InPlace #100DaysOfCode #GitHub #OpenSource #LearningByDoing #GeeksForGeeks #GFG160 #LeetCode
-
-GFG 160 Challenge Update
-
-Hey guys 👋
-
-Due to some personal stuff, my GFG-160 streak broke a while back 💔 — but I've picked it up right where I left off!
-
-✅ 40 problems done 🎉
-
-🧠 Still staying focused on the main goal:
-✨ learning ✨
-
-📌 Along the way, I also shared a couple of unique approaches I came up with:
-
-🧩 Day 25 - Insert Interval in O(1) Space https://www.linkedin.com/posts/ratndeep-chavan-675837290_dsa-python-programmingskills-activity-7351988871158464513-EShJ?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEaaRfkB1SjbpG7jxuSclx9X-zHGYnRtxDQ
-
-🔄 Day 35 - Spiral Matrix with a Twist https://www.linkedin.com/posts/ratndeep-chavan-675837290_python-dsa-codingchallenge-activity-7353452854235348993-Rlsg?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEaaRfkB1SjbpG7jxuSclx9X-zHGYnRtxDQ
-
-Looking forward to tackling the next set of problems 💪🔥
-Let's gooo! 🚀
-
-📘 For well-documented Python solutions, feel free to check out the repo:
-👉 [GitHub Link] (replace with actual)
-
-#DSA #Python #ProblemSolving #CodingChallenge #CleanCode #CodingJourney #DevJourney #CodeNewbie #CodingUpdate #KeepGoing #100DaysOfCode #GitHub #OpenSource #LearningByDoing #GeeksForGeeks #GFG160 #LeetCode
-
 """

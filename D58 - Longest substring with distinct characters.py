@@ -51,7 +51,7 @@ class Solution:
                 # Shrink the window from the left
                 left = previous_idx
 
-            #  Update the current window length
+            # Update the current window length
             current_len = right - left
             # Update the answer if needed
             substring_len = max(substring_len, current_len)
@@ -61,8 +61,3 @@ class Solution:
             right += 1  # Expand the window
 
         return substring_len
-
-
-s = Solution()
-ans = s.longestUniqueSubstr("Viraj asdfghjklo")
-print(ans)
